@@ -1,11 +1,10 @@
 const { DateTime } = require('luxon');
 const CleanCSS = require('clean-css');
 const urlParse = require('url-parse');
-const pluginRss = require('@11ty/eleventy-plugin-rss');
 const slugify = require('slugify');
 
 module.exports = function (config) {
-	config.addCollection('futureevents', function (collection) {
+	config.addCollection('events', function (collection) {
 		let allEvents = collection.getFilteredByGlob('site/events/*.md');
 		let futureEvents = allEvents.filter((event) => {
 			return event.data.date >= new Date();
@@ -25,9 +24,9 @@ module.exports = function (config) {
 		return collection.getFilteredByGlob('site/events/*.md');
 	});
 
-	config.addFilter('getConferenceYears', (conferences) => {
-		let result = conferences.reduce((years, conf) => {
-			let current_year = DateTime.fromJSDate(conf.data.date, {
+	config.addFilter('getEventYears', (events) => {
+		let result = events.reduce((years, ev) => {
+			let current_year = DateTime.fromJSDate(ev.data.date, {
 				zone : 'utc'
 			}).year;
 			if (years.indexOf(current_year) === -1) {
@@ -60,12 +59,12 @@ module.exports = function (config) {
 		return current_month === month && current_year === year;
 	});
 
-	config.addFilter('doesConfExist', (conferences, monthToTest, yearToTest) => {
-		let length = conferences.filter((conf) => {
-			let month = DateTime.fromJSDate(conf.data.date, {
+	config.addFilter('doesEventExist', (events, monthToTest, yearToTest) => {
+		let length = events.filter((ev) => {
+			let month = DateTime.fromJSDate(ev.data.date, {
 				zone : 'utc'
 			}).toFormat('MMMM');
-			let year = DateTime.fromJSDate(conf.data.date, {
+			let year = DateTime.fromJSDate(ev.data.date, {
 				zone : 'utc'
 			}).year;
 			return month === monthToTest && year === yearToTest;
@@ -135,10 +134,8 @@ module.exports = function (config) {
 		});
 	});
 
-	config.addPlugin(pluginRss);
-
-	config.addPassthroughCopy('site/script');
-	config.addPassthroughCopy('site/images');
+	config.addPassthroughCopy('assets/scripts');
+	config.addPassthroughCopy('assets/images');
 	config.addPassthroughCopy('site/admin');
 	config.addPassthroughCopy('apple-touch-icon.png');
 	config.addPassthroughCopy('favicon.ico');

@@ -1,0 +1,80 @@
+--- 
+layout: layouts/base.njk 
+---
+
+<header class="site-header">
+    <div class="logo">
+        <a href="https://css-tricks.com">
+            <div class="screen-reader-text">CSS-Tricks</div>
+            <svg class="icon-logo-star" width="35px" height="35px">
+                <use xlink:href="#icon-logo-star"></use>
+            </svg>
+            <!-- 288 35 -->
+            <svg class="icon-logo-text" width="214px" height="35px">
+                <use xlink:href="#logo"></use>
+            </svg>
+        </a>
+        <span class="presents">presents</span>
+    </div>
+
+    <h1>
+        <a href="/">{{ title }}</a>
+    </h1>
+    {% if lede %}
+        <p class="subtitle">{{ lede }}</p>
+    {% endif %}
+
+    {{ content | safe }}
+
+    <a class="contribute-link" href="https://github.com/CSS-Tricks/conferences#contributing">
+        <strong>Add an Event</strong>
+        on GitHub
+    </a>
+
+    <nav class="main-nav">
+        <div class="time-travel">
+            <a href="/" {% if page.url == "/" %} class="active" {% endif %}>Upcoming</a>
+            <a href="/archive/" {% if page.url == "/archive/" %} class="active" {% endif %}>Past</a>
+        </div>
+        <div class="style-switcher">
+            <button class="active" data-body-class="grid">
+                <span aria-hidden="true" class="view-icon">⠿</span>
+                <span class="screen-reader-text">
+                    View conferences as grid
+                </span>
+            </button>
+            <button data-body-class="list">
+                <span aria-hidden="true" class="view-icon">☰</span>
+                <span class="screen-reader-text">
+                    View conferences as list
+                </span>
+            </button>
+        </div>
+    </nav>
+
+</header>
+
+<div id="maincontent" role="main" aria-label="Conference listing">
+    <ul aria-label="Conference listed by months">
+    {%- for year in (collections.events | getEventYears) -%}
+        {%- for month in helper.months -%} 
+            {% if (collections.events | doesEventExist(month, year)) > 0 %}
+                <div role="region" aria-labelledby="{{ month | slug }}-hed">
+                    <h2 class="month-heading" id="{{ month | slug }}-hed">
+                        {{ month }} {{ year }}
+                    </h2>
+                    <ul class="conference-list">
+                        {%- for conf in collections.events -%} 
+                            {% if conf.data.date | checkDate(month, year) %}
+                                <li class="conf">
+                                    {% include "event.njk" %}
+                                </li>
+                            {% endif %} 
+                        {%- endfor -%}
+                    </ul>
+                </div>
+            {% endif %} 
+        {%- endfor -%}
+        {%- endfor -%}
+  </ul>
+</div>

@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/ramigs/events#readme",
 	"devDependencies": {
-		"@11ty/eleventy": "^0.9.0"
+		"@11ty/eleventy": "^0.9.0",
+		"url-parse": "^1.4.7"
 	}
 }
