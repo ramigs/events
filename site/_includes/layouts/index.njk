@@ -27,7 +27,7 @@ layout: layouts/base.njk
     {{ content | safe }}
 
     <a class="contribute-link" href="https://github.com/CSS-Tricks/conferences#contributing">
-        <strong>Add an Event</strong>
+        <strong>Add Event</strong>
         on GitHub
     </a>
 
@@ -56,25 +56,26 @@ layout: layouts/base.njk
 
 <div id="maincontent" role="main" aria-label="Conference listing">
     <ul aria-label="Conference listed by months">
-    {%- for year in (collections.events | getEventYears) -%}
-        {%- for month in helper.months -%} 
-            {% if (collections.events | doesEventExist(month, year)) > 0 %}
-                <div role="region" aria-labelledby="{{ month | slug }}-hed">
-                    <h2 class="month-heading" id="{{ month | slug }}-hed">
-                        {{ month }} {{ year }}
-                    </h2>
-                    <ul class="conference-list">
-                        {%- for conf in collections.events -%} 
-                            {% if conf.data.date | checkDate(month, year) %}
-                                <li class="conf">
-                                    {% include "event.njk" %}
-                                </li>
-                            {% endif %} 
-                        {%- endfor -%}
-                    </ul>
-                </div>
-            {% endif %} 
+        {%- for year in (pagination.items | getEventYears) -%}
+            {%- for month in helper.months -%}
+                {% if (pagination.items | doesEventExist(month, year)) > 0 %}
+                    <div role="region" aria-labelledby="{{ month | slug }}-hed">
+                        <h2 class="month-heading" id="{{ month | slug }}-hed">
+                            {{ month }}
+                            {{ year }}
+                        </h2>
+                        <ul class="conference-list">
+                            {%- for conf in pagination.items -%}
+                                {% if conf.data.date | checkDate(month, year) %}
+                                    <li class="conf">
+                                        {% include "event.njk" %}
+                                    </li>
+                                {% endif %}
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                {% endif %}
+            {%- endfor -%}
         {%- endfor -%}
-        {%- endfor -%}
-  </ul>
+</ul>
 </div>
