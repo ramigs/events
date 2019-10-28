@@ -1,0 +1,15 @@
+{
+  "source" : "https://conferences.css-tricks.com",
+  "conferences" : [
+    {
+        "title" : "FronteersConf",
+        "date" : "Tue Dec 03 2019 00:00:00 GMT+0000 (Western European Standard Time)",
+            "endDate" : "Wed Dec 04 2019 00:00:00 GMT+0000 (Western European Standard Time)",
+        "url" : "https://fronteers.nl/congres/2019",
+        "location" : "Amsterdam, the Netherlands",
+        "byline" : "Back in Pathé Tuschinski for 2 days with 18 fantastic speakers."
+            ,"cocUrl" : "https://fronteers.nl/congres/2019/code-of-conduct"
+    }
+    
+    
+    ]}
