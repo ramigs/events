@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   branch: master
   open_authoring: true
   repo: ramigs/events
