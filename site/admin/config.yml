@@ -1,8 +1,8 @@
 backend:
   name: git-gateway
+  repo: ramigs/events
   branch: master
   open_authoring: true
-  repo: ramigs/events
 
 publish_mode: editorial_workflow
 
